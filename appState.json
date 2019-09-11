@@ -9,7 +9,8 @@
         "isDirectory": true,
         "children": [
           "74f63812-40b2-4eb1-9ce2-1856baa97dcb",
-          "0466501c-1631-4b8b-b3c0-8bae7f4a77ce"
+          "0466501c-1631-4b8b-b3c0-8bae7f4a77ce",
+          "72fb4d63-24b5-4423-8c2a-f686dadc1f8d"
         ],
         "isRemovable": false,
         "filePath": "hiru1109_issue628"
@@ -43,13 +44,33 @@
         "isRemovable": true,
         "filePath": "hiru1109_issue628/ClusterManager.js",
         "code": "module.exports = function() {\n    this.clusters = [];\n\n    this.clusters[\"hiru\"] = {\n        host: process.env.EndPoint_redisHiru,\n        port: 6379,\n        clusterModeEnabled: false\n    };\n};"
+      },
+      "72fb4d63-24b5-4423-8c2a-f686dadc1f8d": {
+        "id": "72fb4d63-24b5-4423-8c2a-f686dadc1f8d",
+        "parent": "5dff2199-9b5a-4225-b0f8-41a233f18cf6",
+        "name": "new.js",
+        "type": "JS_LAMBDA",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "hiru1109_issue628/new.js",
+        "code": "let SL_REDIS = require('slappforge-sdk-redis');\nlet clusterManager = require('./ClusterManager');\nconst redis = new SL_REDIS.Redis(clusterManager);\n\nexports.handler = function (event, context, callback) {\n    // You must always quit the redis client after it's used\n    redis.del({\n        redisClient: test,\n        params: ['aa']\n    }, function (error, response, redisClient) {\n        if (error) {\n            callback(error);\n        } else {\n            //redisClient.quit();\n        }\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "triggers": []
       }
     },
     "rootNode": "5dff2199-9b5a-4225-b0f8-41a233f18cf6",
     "openFiles": [
-      "74f63812-40b2-4eb1-9ce2-1856baa97dcb"
+      "74f63812-40b2-4eb1-9ce2-1856baa97dcb",
+      "72fb4d63-24b5-4423-8c2a-f686dadc1f8d"
     ],
-    "currentFileId": "74f63812-40b2-4eb1-9ce2-1856baa97dcb",
+    "currentFileId": "72fb4d63-24b5-4423-8c2a-f686dadc1f8d",
     "resources": {
       "redis-hiru": {
         "name": "redis-hiru",
@@ -152,7 +173,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1568180798939
+    "lastSave": 1568181585668
   },
   "VCS_STATE": {
     "provider": "GitHub",
